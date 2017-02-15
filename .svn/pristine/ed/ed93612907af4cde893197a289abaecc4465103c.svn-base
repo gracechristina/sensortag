@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/read_write.dir/read_write.c.o  -o read_write -rdynamic ../../libgattlib.so -lglib-2.0 -lbluetooth -Wl,-rpath,/home/pi/test/gattlib/build 

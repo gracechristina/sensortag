@@ -1,0 +1,183 @@
+/*
+ *
+ *  GattLib - GATT Library
+ *
+ *  Copyright (C) 2016  Olivier Martin <olivier@labapart.org>
+ *
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+#include <assert.h>
+#include <stdio.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include "gattlib.h"
+
+  
+typedef enum { READ, WRITE} operation_t;
+operation_t g_operation;
+
+static bt_uuid_t g_uuid;
+long int value_data;
+
+static void usage(char *argv[]) {
+	printf("%s <device_address> <read|write> <uuid> [<hex-value-to-write>]\n", argv[0]);
+	printf("Test");
+}
+
+void notification_handler(uint16_t status_handle, const uint8_t* data, size_t data_length, void* user_data) {
+	int i;
+	printf("masuk");
+	g_print("Notification handle = 0x%04x value: ",status_handle);
+
+	for (i = 0; i < data_length; i++)
+		g_print("%02x ", data[i]);
+
+	g_print("\n");
+//	rl_forced_update_display();
+}
+
+
+int main(int argc, char *argv[]) {
+	uint8_t buffer[100];
+	int i, len, ret;
+	gatt_connection_t* connection;
+	uint16_t status_handle, handle;
+	connection = gattlib_connect(NULL, argv[1], BDADDR_LE_PUBLIC, BT_IO_SEC_LOW, 0, 0);
+	if (connection == NULL) {
+                fprintf(stderr, "Fail to connect to the bluetooth device.\n");
+                return 1;
+        }
+	printf("connection ok");
+	//status_handle = 0x22;
+	handle = strtoimax(argv[2], NULL,16);
+	status_handle = strtoimax(argv[3], NULL, 16);
+	uint8_t enable_sensor = strtoimax(argv[4],NULL,16);
+	uint8_t enable_notification = strtoimax(argv[5],NULL,16);//or 0001
+	printf("writing");
+
+	while(1){
+	gattlib_write_char_by_handle(connection, handle,&enable_sensor,sizeof(enable_sensor));
+	bt_string_to_uuid(&g_uuid, "f000aa01-0451-4000-b000-000000000000");
+	len = gattlib_read_char_by_uuid(connection, &g_uuid, buffer, sizeof(buffer));
+
+        printf("Read UUID completed UAUAUAU: ");
+                for (i = 0; i < len; i++)
+                        printf("%02x ", buffer[i]);
+                printf("\n");
+
+
+	
+	gattlib_write_char_by_handle(connection, status_handle, &enable_notification, sizeof(enable_notification));
+	gattlib_register_notification(connection, notification_handler, NULL);
+	printf("done");	
+	}
+	/*uint16_t handle = strtoimax(argv[2], NULL, 16);
+	printf("TRY PRINTING");
+	printf("%02x ", handle);
+	uint8_t  value = strtoimax(argv[3], NULL, 16);
+	printf("value written: %d\n", value);
+	gattlib_register_notification(connection,notification_handler,NULL);
+		gattlib_write_char_by_handle(connection, handle, &value, sizeof(value));
+		printf("endddddd");
+*/
+		/*len = gattlib_read_char_by_uuid(connection, &g_uuid, buffer, sizeof(buffer));
+		printf("Reading UUID completed: ");
+		for (i = 0; i < len; i++)
+                        printf("%02x ", buffer[i]);
+                printf("\n");
+
+
+
+
+
+	/*if ((argc != 4) && (argc != 5)) {
+		usage(argv);
+		return 1;
+	}*/
+
+	/*if (strcmp(argv[2], "read") == 0) {
+		g_operation = READ;
+	} else if ((strcmp(argv[2], "write") == 0) && (argc == 6)) {
+		g_operation = WRITE;
+
+		if ((strlen(argv[4]) >= 2) && (argv[4][0] == '0') && (argv[4][0] == 'x')) {
+			value_data = strtol(argv[4], NULL, 0);
+		} else {
+			value_data = strtol(argv[4], NULL, 16);
+		}
+		printf("Value to write: 0x%lx\n", value_data);
+	} else {
+		usage(argv);
+		//return 1;
+	}
+
+	if (bt_string_to_uuid(&g_uuid, argv[5]) < 0) {
+		usage(argv);
+		//return 1;
+	}
+
+	connection = gattlib_connect(NULL, argv[1], BDADDR_LE_PUBLIC, BT_IO_SEC_LOW, 0, 0);
+	if (connection == NULL) {
+		fprintf(stderr, "Fail to connect to the bluetooth device.\n");
+		return 1;
+	}
+	uint16_t status_handle=0x21; // Handle of the 'status' characteristic
+    	uint16_t enable_notification = 0x0001;
+
+    	// Enable Status Notification
+    	gattlib_write_char_by_handle(connection, status_handle + 1, &enable_notification, sizeof(enable_notification));
+    	// Register notification handler
+    	gattlib_register_notification(connection, notification_cb, NULL);
+
+	/*if (g_operation == READ) {
+		len = gattlib_read_char_by_uuid(connection, &g_uuid, buffer, sizeof(buffer));
+
+		printf("Read UUID completed UAUAUAU: ");
+		for (i = 0; i < len; i++)
+			printf("%02x ", buffer[i]);
+		printf("\n");
+	} else if(g_operation == WRITE) {
+		uint16_t handle = strtoimax(argv[3], NULL, 16);
+		printf("TRY PRINTING");
+		printf("%02x ", handle);
+		uint8_t  value = strtoimax(argv[4], NULL, 16);
+		printf("value written: %d\n", value);
+		gattlib_register_notification(connection,notification_handler,NULL);
+		gattlib_write_char_by_handle(connection, handle, &value, sizeof(value));
+		printf("endddddd");
+
+		/*len = gattlib_read_char_by_uuid(connection, &g_uuid, buffer, sizeof(buffer));
+		printf("Reading UUID completed: ");
+		for (i = 0; i < len; i++)
+                        printf("%02x ", buffer[i]);
+                printf("\n");
+*/
+
+/*		uint16_t status_handle = strtoimax(argv[3], NULL, 16);
+		printf("TRY PRINTING");
+		uint16_t enable_notification = strtoimax(argv[4],NULL,16);
+		gattlib_write_char_by_handle(connection, status_handle, &enable_notification, sizeof(enable_notification));
+		printf("REACH MIDDLE");
+		gattlib_register_notification(connection,notification_cb,NULL);
+		printf("reach end");*/
+//	}
+
+	//gattlib_disconnect(connection);
+	//return 0;
+}

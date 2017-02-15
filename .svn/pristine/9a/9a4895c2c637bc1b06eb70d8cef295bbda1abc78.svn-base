@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/gatttool.dir/gatttool.c.o CMakeFiles/gatttool.dir/interactive.c.o CMakeFiles/gatttool.dir/utils.c.o  -o gatttool -rdynamic ../../libgattlib.so -lreadline -lglib-2.0 -lbluetooth -Wl,-rpath,/home/pi/test/gattlib/build 

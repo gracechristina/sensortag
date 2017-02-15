@@ -1,0 +1,12 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/gatttool.dir/gatttool.c.o"
+  "CMakeFiles/gatttool.dir/interactive.c.o"
+  "CMakeFiles/gatttool.dir/utils.c.o"
+  "gatttool.pdb"
+  "gatttool"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C)
+  include(CMakeFiles/gatttool.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

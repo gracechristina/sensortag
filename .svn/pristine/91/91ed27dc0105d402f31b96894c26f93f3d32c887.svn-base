@@ -1,0 +1,43 @@
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "C"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_C
+  "/home/pi/test/gattlib/bluez/attrib/att.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/attrib/att.c.o"
+  "/home/pi/test/gattlib/bluez/attrib/gatt.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/attrib/gatt.c.o"
+  "/home/pi/test/gattlib/bluez/attrib/gattrib.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/attrib/gattrib.c.o"
+  "/home/pi/test/gattlib/bluez/btio/btio.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/btio/btio.c.o"
+  "/home/pi/test/gattlib/bluez/lib/bluetooth.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/lib/bluetooth.c.o"
+  "/home/pi/test/gattlib/bluez/lib/hci.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/lib/hci.c.o"
+  "/home/pi/test/gattlib/bluez/lib/sdp.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/lib/sdp.c.o"
+  "/home/pi/test/gattlib/bluez/lib/uuid.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/lib/uuid.c.o"
+  "/home/pi/test/gattlib/bluez/src/log.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/bluez/src/log.c.o"
+  "/home/pi/test/gattlib/src/gattlib_connect.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/src/gattlib_connect.c.o"
+  "/home/pi/test/gattlib/src/gattlib_discover.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/src/gattlib_discover.c.o"
+  "/home/pi/test/gattlib/src/gattlib_read_write.c" "/home/pi/test/gattlib/build/CMakeFiles/gattlib.dir/src/gattlib_read_write.c.o"
+  )
+set(CMAKE_C_COMPILER_ID "GNU")
+
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_C
+  "BLUEZ_VERSION_MAJOR=5"
+  "BLUEZ_VERSION_MINOR=23"
+  )
+
+# The include file search paths:
+set(CMAKE_C_TARGET_INCLUDE_PATH
+  "../include"
+  "../bluez/attrib"
+  "../bluez/btio"
+  "../bluez/src"
+  "/usr/include/glib-2.0"
+  "/usr/lib/arm-linux-gnueabihf/glib-2.0/include"
+  )
+
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")
