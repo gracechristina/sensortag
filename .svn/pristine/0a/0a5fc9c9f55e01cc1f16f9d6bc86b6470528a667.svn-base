@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/discover.dir/discover.c.o  -o discover -rdynamic ../../libgattlib.so -lglib-2.0 -lbluetooth -Wl,-rpath,/home/pi/test/gattlib/build 

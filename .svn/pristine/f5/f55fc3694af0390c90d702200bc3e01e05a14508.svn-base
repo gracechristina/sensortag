@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/ble_scan.dir/ble_scan.c.o  -o ble_scan -rdynamic ../../libgattlib.so -lpthread -lglib-2.0 -lbluetooth -Wl,-rpath,/home/pi/test/gattlib/build 
